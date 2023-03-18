@@ -28,57 +28,39 @@ const drawBoard = () => {
     return board;
 };
 
-const drawStartingPosition = () => {
+const drawStartingPosition = ({
+    playerColor,
+    setWhitePosition,
+    setBlackPosition,
+    whitePosition,
+    blackPosition,
+}) => {
     let pieces = [];
-    for (let i = 0; i < 16; i++) {
-        let row = Math.floor(i / 8);
-
-        let piece;
-
-        if (row === 1) {
-            piece = "pawn";
-        } else if (i === 0 || i === 7) {
-            piece = "rook";
-        } else if (i === 1 || i === 6) {
-            piece = "knight";
-        } else if (i === 2 || i === 5) {
-            piece = "bishop";
-        } else if (i === 3) {
-            piece = "queen";
-        } else {
-            piece = "king";
-        }
-
+    for (let i = 0; i < whitePosition.length; i++) {
         pieces.push(
             <Piece
-                piece={piece}
-                position={{ x: (i * 80) % 640, y: 560 - row * 80 }}
+                piece={whitePosition[i].piece}
+                position={{ x: whitePosition[i].x, y: whitePosition[i].y }}
                 color={0}
+                playerColor={playerColor}
+                setPosition={setWhitePosition}
+                setEnemyPosition={setBlackPosition}
+                myPosition={whitePosition}
+                enemyPosition={blackPosition}
             />
         );
     }
-    for (let j = 0; j < 16; j++) {
-        let row = Math.floor(j / 8);
-        let piece;
-        if (row === 1) {
-            piece = "pawn";
-        } else if (j === 0 || j === 7) {
-            piece = "rook";
-        } else if (j === 1 || j === 6) {
-            piece = "knight";
-        } else if (j === 2 || j === 5) {
-            piece = "bishop";
-        } else if (j === 3) {
-            piece = "queen";
-        } else {
-            piece = "king";
-        }
-
+    for (let j = 0; j < blackPosition.length; j++) {
         pieces.push(
             <Piece
-                piece={piece}
-                position={{ x: (j * 80) % 640, y: row * 80 }}
+                piece={blackPosition[j].piece}
+                position={{ x: blackPosition[j].x, y: blackPosition[j].y }}
                 color={1}
+                playerColor={playerColor}
+                setPosition={setBlackPosition}
+                setEnemyPosition={setWhitePosition}
+                myPosition={blackPosition}
+                enemyPosition={whitePosition}
             />
         );
     }
